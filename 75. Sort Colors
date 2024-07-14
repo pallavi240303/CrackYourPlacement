@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        //the basic approach is to apply three pointer in which l is for 0(red), m is for 1(white) and h for 2(blue).
+        //during the traversal we will just use simple swap logic to get the sorted order of colors.
+
+        int l = 0,m=0,h= nums.size()-1;
+        while(m<=h){
+            if (nums[m]==0){
+                swap(nums[m],nums[l]);
+                l++;
+                m++;
+            }
+            else if(nums[m]==1){
+                m++;
+            }
+            else{
+                swap(nums[h],nums[m]);
+                h--;
+            }
+        }
+    }
+};
