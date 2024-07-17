@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        int lastbuy = -prices[0]; // since we buying the stocks so profit will be in negative first
+        int lastsold = 0; // since no stocks sold initially so it will ne zero
+        for(int i = 0; i<n;i++){
+            int curbuy = max(lastbuy , lastsold - prices[i]); // maximum profit that we can have if we buy the stocks on day ith
+            int cursold = max(lastsold , lastbuy + prices[i]); // maximum profit that we can have id we sell the stocks on day ith
+            lastbuy = curbuy;
+            lastsold = cursold;
+        }
+        return lastsold;
+    }
+};
