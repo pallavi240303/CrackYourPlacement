@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    long long int findMaxProduct(vector<int>& arr) {
+        int n = arr.size();
+        if (n == 1) return arr[0];
+        
+        int ind = -1; // index of largest negative element
+        int mini = INT_MIN;
+        int mod = 1e9+7;
+        int zc = 0, nc = 0;
+        long long int prod = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 0) {
+                zc++;
+            } else if (arr[i] < 0) {
+                nc++;
+                if (ind == -1 || arr[i] > mini) {
+                    ind = i;
+                    mini = arr[i];
+                }
+            }
+        }
+        
+        if (zc == n) return 0;
+        if (nc == 1 && zc == n - 1) return 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 0) continue;
+            if (nc % 2 == 1 && i == ind) continue;
+            prod = ((prod * arr[i]) % mod + mod) % mod;
+        }
+        return prod;
+    }
+};
