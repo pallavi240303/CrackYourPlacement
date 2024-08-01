@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool noOfDays(vector<int>& weights, int days, int m){
+        int day = 1;
+        int load = 0;
+        for(int i = 0; i< weights.size() ;i++){
+            if(load + weights[i] > m){
+                day++;
+                load = weights[i];
+            }else{
+                load += weights[i];
+            }
+        }
+        return (day <= days);
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int mini=INT_MIN,maxi= 0;
+        for(int i = 0; i< weights.size();i++){
+            mini = max(mini,weights[i]);
+            maxi += weights[i];
+        }
+        int l = mini, h = maxi;
+        while(l <= h){
+            int m = l + (h-l)/2;
+            if(noOfDays(weights,days,m)){
+                h = m - 1;
+            }else{
+                l = m + 1;
+            }
+        }
+        return l;
+    }
+};
