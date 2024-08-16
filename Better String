@@ -1,0 +1,33 @@
+/*
+-->Adding a New Character:
+Doubles the number of subsequences, as each subsequence can either include 
+or exclude the new character.
+
+-->Duplicate Character Handling:
+When a character appears again, some subsequences that were counted earlier 
+will reappear. To avoid double-counting, subtract the number of subsequences 
+that existed before the last occurrence of the character.
+*/
+class Solution {
+  public:
+    int Subseq(string str){
+        unordered_map<char,int> mp;
+        int cnt = 1;
+        for(char i : str){
+            int newC = 2*cnt;
+            if(mp.find(i) != mp.end()){
+                newC-= mp[i];
+            }
+            mp[i] = cnt;
+            cnt = newC;
+        }
+        return cnt;
+    }
+  
+    string betterString(string str1, string str2) {
+        // code here
+        int x = Subseq(str1);
+        int y = Subseq(str2);
+        return (x>y || x==y)? str1 :str2;
+    }
+};
