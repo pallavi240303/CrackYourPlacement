@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void subseqFunc(int ind, vector<int>& ds,vector<vector<int>> &ans, vector<int> &nums){
+        if(ind == nums.size()){
+            ans.push_back(ds);
+            return;
+        }
+        //take 
+        ds.push_back(nums[ind]);
+        subseqFunc(ind+1,ds,ans,nums);
+        //not take
+        ds.pop_back();
+        subseqFunc(ind+1,ds,ans,nums);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> ds;
+        vector<vector<int>> ans;
+        subseqFunc(0,ds,ans,nums);
+        return ans;
+    }
+};
