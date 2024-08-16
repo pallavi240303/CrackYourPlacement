@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void combsum(int ind, vector<int> &ds, set<vector<int>> &ans, vector<int> &cand, int target) {
+        if (target == 0) { 
+            ans.insert(ds);  // If the target is reached, add the current combination
+            return;
+        }
+
+        for (int i = ind; i < cand.size(); i++) {
+            if (i > ind && cand[i] == cand[i-1]) continue;  // Skip duplicates
+            if (cand[i] > target) break;  // No need to proceed further if the current candidate exceeds the target
+            
+            ds.push_back(cand[i]);  // Include the current candidate
+            combsum(i + 1, ds, ans, cand, target - cand[i]);  // Recur with reduced target
+            ds.pop_back();  // Backtrack to explore other possibilities
+        }
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        set<vector<int>> ans;  // To store unique combinations
+        vector<int> ds;  // To store the current combination
+        sort(candidates.begin(), candidates.end());  // Sort the candidates to handle duplicates and make the loop work correctly
+        combsum(0, ds, ans, candidates, target);
+        
+        // Convert the set to a vector and return
+        return vector<vector<int>>(ans.begin(), ans.end());
+    }
+};
