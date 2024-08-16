@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void combsum(int k, int n, int val, vector<int>& ds, vector<vector<int>>& ans){
+        if(k == 0){
+            if(n == 0)
+                ans.push_back(ds);
+            return;
+        }
+        if(k < 0 || n < 0 || val > 9) return;
+        ds.push_back(val);
+        combsum(k-1,n-val,val+1,ds,ans);
+        ds.pop_back();
+        combsum(k,n,val+1,ds,ans);
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> ans;
+        vector<int> ds;
+        combsum(k,n,1,ds,ans);
+        return ans;
+    }
+};
